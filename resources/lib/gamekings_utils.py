@@ -21,13 +21,13 @@ class HTTPCommunicator :
         connection.request( "POST", url, parameters, headers )
         response = connection.getresponse()
         
-        # Compressed (gzip) response...
+        # Compressed (gzip) response
         if response.getheader( "content-encoding" ) == "gzip" :
             htmlGzippedData = response.read()
             stringIO       = StringIO.StringIO( htmlGzippedData )
             gzipper        = gzip.GzipFile( fileobj = stringIO )
             htmlData       = gzipper.read()
-        # Plain text response...
+        # Plain text response
         else :
             htmlData = response.read()
 
@@ -48,7 +48,7 @@ class HTTPCommunicator :
         opener = urllib2.build_opener(h)
         f = opener.open(request)
 
-        # Compressed (gzip) response...
+        # Compressed (gzip) response
         if f.headers.get( "content-encoding" ) == "gzip" :
             htmlGzippedData = f.read()
             stringIO        = StringIO.StringIO( htmlGzippedData )
@@ -59,7 +59,7 @@ class HTTPCommunicator :
             # print "[HTTP Communicator] GET %s" % url
             # print "[HTTP Communicator] Result size : compressed [%u], decompressed [%u]" % ( len( htmlGzippedData ), len ( htmlData ) )
             
-        # Plain text response...
+        # Plain text response
         else :
             htmlData = f.read()
         

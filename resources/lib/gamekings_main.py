@@ -20,7 +20,7 @@ import xbmcplugin
 class Main:
     def __init__( self ):
         #
-        # All
+        # Videos
         #
         parameters = {"action" : "list", "plugin_category" : __language__(30000), "url" : "http://www.gamekings.tv/category/videos/page/001/", "next_page_possible": "True"}
         url = sys.argv[0] + '?' + urllib.urlencode(parameters)
@@ -29,7 +29,7 @@ class Main:
         xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ] ), url = url, listitem=listitem, isFolder=folder)
         
         #
-        # Gamekings Tv
+        # Afleveringen
         #
         parameters = {"action" : "list", "plugin_category" : __language__(30001), "url" : "http://www.gamekings.tv/category/tv-afleveringen/page/001/", "next_page_possible": "True"}
         url = sys.argv[0] + '?' + urllib.urlencode(parameters)
@@ -46,8 +46,8 @@ class Main:
         folder = True
         xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ] ), url = url, listitem=listitem, isFolder=folder)
         
-        # Disable sorting...
+        # Disable sorting
         xbmcplugin.addSortMethod( handle=int( sys.argv[ 1 ] ), sortMethod=xbmcplugin.SORT_METHOD_NONE )
 		
-        # End of list...
+        # End of list
         xbmcplugin.endOfDirectory( handle=int( sys.argv[ 1 ] ), succeeded=True )

@@ -28,7 +28,7 @@ class Main:
 		if (self.DEBUG) == 'true':
 			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % ( __addon__, __version__, __date__, "ARGV", repr(sys.argv), "File", str(__file__) ), xbmc.LOGNOTICE )
 
-		# Parse parameters...
+		# Parse parameters
 		self.plugin_category = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['plugin_category'][0]
 		self.video_list_page_url = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['url'][0]
 		self.next_page_possible = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['next_page_possible'][0]
@@ -38,7 +38,6 @@ class Main:
 		
 		if self.next_page_possible == 'True':
 		# Determine current item number, next item number, next_url
-		#http://www.ggmania.com/more.php3?next=000ampersandkategory=movie"
 			pos_of_page		 			 	 = self.video_list_page_url.rfind('/page/')
 			if pos_of_page >= 0:
 				page_number_str			     = str(self.video_list_page_url[pos_of_page + len('/page/'):pos_of_page + len('/page/') + len('000')])
@@ -56,12 +55,12 @@ class Main:
 					xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "self.next_url", str(urllib.unquote_plus(self.next_url)) ), xbmc.LOGNOTICE )
 	
 		#
-		# Get the videos...
+		# Get the videos
 		#
 		self.getVideos()
 	
 	#
-	# Get videos...
+	# Get videos
 	#
 	def getVideos( self ) :
 		#
@@ -70,20 +69,22 @@ class Main:
 		thumbnail_urls_index = 0
 		
 		# 
-		# Get HTML page...
+		# Get HTML page
 		#
 		html_source = HTTPCommunicator().get( self.video_list_page_url )
 
-		# Parse response...
+		# Parse response
 		soup = BeautifulSoup( html_source )
 		
+		# Get the thumbnail urls
 		#<img src="http://www.gamekings.tv/wp-content/uploads/20130307_gowascensionreviewsplash1-75x75.jpg" alt="God of War: Ascension Review">
 		#for http://www.gamekings.tv/pcgamersunite/ the thumbnail links sometimes contain '//': f.e. http://www.gamekings.tv//wp-content/uploads/20110706_hww_alienwarelaptop_slider-75x75.jpg
 		thumbnail_urls = soup.findAll('img', attrs={'src': re.compile("^http://www.gamekings.tv/wp-content/uploads/")})
-										
+			
 		if (self.DEBUG) == 'true':
 			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(thumbnail_urls)", str(len(thumbnail_urls)) ), xbmc.LOGNOTICE )
 		
+		# Get the video page urls
 		#http://www.gamekings.tv/videos/special-forces-team-x-review/
 		#skip this: http://www.gamekings.tv/videos/gears-of-war-judgment-hands-on/#disqus_thread
 		video_page_urls = soup.findAll('a', attrs={'href': re.compile("^http://www.gamekings.tv/videos/")})
@@ -93,16 +94,24 @@ class Main:
 			
 		for video_page_url in video_page_urls :
 			video_page_url = video_page_url['href']
-			#if link doesn't end on a '/': skip the link
+			#if link ends with a '/': process the link, if not: skip the link
 			if video_page_url.endswith('/'):
 				pass
 			else:
-				#skip video page url without a video
 				if (self.DEBUG) == 'true':
 					xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url not ending on '/'", str(video_page_url) ), xbmc.LOGNOTICE )
 				continue
+
+			#don't skip aflevering if catagory is 'afleveringen'			
+			if self.plugin_category == __language__(30001):
+				pass
+			#if 'aflevering' found in video page url, skip the video page url
+			elif video_page_url.find('aflevering') >= 0:
+				if (self.DEBUG) == 'true':
+					xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url aflevering in non-afleveringen category", str(video_page_url) ), xbmc.LOGNOTICE )
+				continue
 			
-			#Make title
+			# Make title
 			title = str(video_page_url)
 			title = title[31:]
 			title = title.capitalize()
@@ -119,7 +128,7 @@ class Main:
 			else:
 				thumbnail_url = thumbnail_urls[thumbnail_urls_index]['src']
 
-			# Add to list...
+			# Add to list
 			parameters = {"action" : "play", "video_page_url" : video_page_url}
 			url = sys.argv[0] + '?' + urllib.urlencode(parameters)
 			listitem = xbmcgui.ListItem( title, iconImage="DefaultVideo.png", thumbnailImage=thumbnail_url )
@@ -129,7 +138,7 @@ class Main:
 
 			thumbnail_urls_index = thumbnail_urls_index + 1
 
-		#Next page entry...
+		#Next page entry
 		if self.next_page_possible == 'True':
 			parameters = {"action" : "list", "plugin_category" : self.plugin_category, "url" : str(self.next_url), "next_page_possible": self.next_page_possible}
 			url = sys.argv[0] + '?' + urllib.urlencode(parameters)
@@ -137,8 +146,8 @@ class Main:
 			folder = True
 			xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ] ), url = url, listitem=listitem, isFolder=folder)
 			
-		# Disable sorting...
+		# Disable sorting
 		xbmcplugin.addSortMethod( handle=int( sys.argv[ 1 ] ), sortMethod=xbmcplugin.SORT_METHOD_NONE )
 		
-		# End of directory...
+		# End of directory
 		xbmcplugin.endOfDirectory( handle=int( sys.argv[ 1 ] ), succeeded=True )

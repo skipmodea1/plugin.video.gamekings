@@ -22,7 +22,7 @@ __plugin__      = "GameKings"
 __author__      = "Skipmode A1"
 __url__         = ""
 __date__        = "17 march 2013"
-__version__     = "1.0"
+__version__     = "1.0.0"
 
 #
 # Imports
@@ -43,7 +43,7 @@ sys.path.append (LIB_DIR)
 # Get plugin settings
 DEBUG = xbmcaddon.Addon(id='plugin.video.gamekings').getSetting('debug')
 
-# Parse parameters...
+# Parse parameters
 if len(sys.argv[2]) == 0:
     #
     # Main menu
