@@ -2,7 +2,7 @@
 # Imports
 #
 from BeautifulSoup import BeautifulSoup
-from gamekings_const import __settings__, __language__, __images_path__, __addon__, __plugin__, __author__, __url__, __date__, __version__
+from gamekings_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
 from gamekings_utils import HTTPCommunicator
 import os
 import re
@@ -38,6 +38,7 @@ class Main:
 		
 		if self.next_page_possible == 'True':
 		# Determine current item number, next item number, next_url
+		#f.e. http://www.gamekings.tv/category/videos/page/001/
 			pos_of_page		 			 	 = self.video_list_page_url.rfind('/page/')
 			if pos_of_page >= 0:
 				page_number_str			     = str(self.video_list_page_url[pos_of_page + len('/page/'):pos_of_page + len('/page/') + len('000')])
@@ -117,6 +118,36 @@ class Main:
 			title = title.capitalize()
 			title = title.replace('-',' ')
 			title = title.replace('/',' ')
+			title = title.replace(' i ',' I ')
+			title = title.replace(' ii ',' II ')
+			title = title.replace(' iii ',' III ')
+			title = title.replace(' iv ',' IV ')
+			title = title.replace(' v ',' V ')
+			title = title.replace(' vi ',' VI ')
+			title = title.replace(' vii ',' VII ')
+			title = title.replace(' viii ',' VIII ')
+			title = title.replace(' ix ',' IX ')
+			title = title.replace(' x ',' X ')
+			title = title.replace(' xi ',' XI ')
+			title = title.replace(' xii ',' XII ')
+			title = title.replace(' xiii ',' XIII ')
+			title = title.replace(' xiv ',' XIV ')
+			title = title.replace(' xv ',' XV ')
+			title = title.replace(' xvi ',' XVI ')
+			title = title.replace(' xvii ',' XVII ')
+			title = title.replace(' xviii ',' XVIII ')
+			title = title.replace(' xix ',' XIX ')
+			title = title.replace(' xx ',' XXX ')
+			title = title.replace(' xxi ',' XXI ')
+			title = title.replace(' xxii ',' XXII ')
+			title = title.replace(' xxiii ',' XXIII ')
+			title = title.replace(' xxiv ',' XXIV ')
+			title = title.replace(' xxv ',' XXV ')
+			title = title.replace(' xxvi ',' XXVI ')
+			title = title.replace(' xxvii ',' XXVII ')
+			title = title.replace(' xxviii ',' XXVIII ')
+			title = title.replace(' xxix ',' XXIX ')
+			title = title.replace(' xxx ',' XXX ')
 						
 			if (self.DEBUG) == 'true':
 				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "title", str(title) ), xbmc.LOGNOTICE )

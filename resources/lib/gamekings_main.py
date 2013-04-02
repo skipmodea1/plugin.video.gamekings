@@ -2,7 +2,7 @@
 # Imports
 #
 from BeautifulSoup import BeautifulSoup
-from gamekings_const import __settings__, __language__, __images_path__, __addon__, __plugin__, __author__, __url__, __date__, __version__
+from gamekings_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
 from gamekings_utils import HTTPCommunicator
 import os
 import re

@@ -34,4 +34,5 @@
 	<string id="30504">Getting video location...</string>
 	<string id="30505">No video found.</string>
 	<string id="30506">No media found for:</string>
+	<string id="30507">Error getting page: %s</string>
 </strings>

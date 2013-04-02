@@ -2,17 +2,18 @@
 # Imports
 #
 from BeautifulSoup import BeautifulSoup
-from gamekings_const import __settings__, __language__, __images_path__, __addon__, __plugin__, __author__, __url__, __date__, __version__
+from gamekings_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
 from gamekings_utils import HTTPCommunicator
 import os
 import re
 import sys
-import urllib
+import urllib, urllib2
 import urlparse
 import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
+
 #
 # Main class
 #
@@ -58,7 +59,19 @@ class Main:
 		dialogWait.create( __language__(30504), title )
 		
 		httpCommunicator = HTTPCommunicator()
-		html_data = httpCommunicator.get ( self.video_page_url )
+		
+		#Incidently a page request gets a HTTP Error 500: Internal Server Error
+		#f.e. http://www.gamekings.tv/videos/het-fenomeen-minecraft/
+		try:
+			html_data = httpCommunicator.get ( self.video_page_url )
+		except urllib2.HTTPError, error:
+			if (self.DEBUG) == 'true':
+				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "HTTPError", str(error) ), xbmc.LOGNOTICE )
+			dialogWait.close()
+			del dialogWait
+			xbmcgui.Dialog().ok( __language__(30000), __language__(30507) % (str(error) ))
+			exit(1)
+			
 		soup = BeautifulSoup(html_data)
 		
 		# Get the video url
