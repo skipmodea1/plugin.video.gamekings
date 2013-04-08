@@ -23,7 +23,7 @@ class Main:
 	#
 	def __init__( self ) :
 		# Get plugin settings
-		self.DEBUG     = __settings__.getSetting('debug')
+		self.DEBUG = __settings__.getSetting('debug')
 		
 		if (self.DEBUG) == 'true':
 			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % ( __addon__, __version__, __date__, "ARGV", repr(sys.argv), "File", str(__file__) ), xbmc.LOGNOTICE )

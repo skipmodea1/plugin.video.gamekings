@@ -161,7 +161,7 @@ class Main:
 			if (self.DEBUG) == 'true':
 				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "thumbnail_url", str(thumbnail_url) ), xbmc.LOGNOTICE )
 
-			#in afleveringen category, skip link if there's no thumbnail. i do this because those links repeat on every page and are redundant imho)
+			#in afleveringen category, skip link if there's no thumbnail. i do this because those links repeat on every page and are redundant imho.
 			#it's bit of a hack but it'll do for now			
 			if self.plugin_category == __language__(30001):
 				if thumbnail_url == '':
