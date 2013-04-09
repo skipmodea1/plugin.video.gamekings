@@ -89,13 +89,13 @@ class Main:
 		# Get the video page urls
 		#<a href="http://www.gamekings.tv/videos/lars-gustavsson-over-battlefield-4/" title="Lars Gustavsson over Battlefield 4">
 		#skip this: <a href='http://www.gamekings.tv/videos/lars-gustavsson-over-battlefield-4/#disqus_thread'>
-		video_page_urls = soup.findAll('a', attrs={'href': re.compile("^http://www.gamekings.tv/videos/")})
+		video_page_and_title_urls = soup.findAll('a', attrs={'href': re.compile("^http://www.gamekings.tv/videos/")})
 		
 		if (self.DEBUG) == 'true':
-			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(video_page_urls)", str(len(video_page_urls)) ), xbmc.LOGNOTICE )
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(video_page_and_title_urls)", str(len(video_page_and_title_urls)) ), xbmc.LOGNOTICE )
 			
-		for video_page_url in video_page_urls :
-			video_page_url = video_page_url['href']
+		for video_page_and_title_url in video_page_and_title_urls :
+			video_page_url = video_page_and_title_url['href']
 			#if link ends with a '/': process the link, if not: skip the link
 			if video_page_url.endswith('/'):
 				pass
@@ -114,9 +114,17 @@ class Main:
 				continue
 			
 			# Make title
-			title = str(video_page_url)
-			title = title[31:]
-			title = title.capitalize()
+# 			title = str(video_page_and_title_url)
+# 			title = title[31:]
+# 			title = title.capitalize()
+			#title = str(video_page_and_title_url['title'])
+# 			try:
+# 				title = str(video_page_and_title_url["title"])
+# 			except:
+# 				title = str(video_page_and_title_url)
+			
+			title = video_page_and_title_url['title']
+			title = title.encode('utf-8')
 			title = title.replace('-',' ')
 			title = title.replace('/',' ')
 			title = title.replace(' i ',' I ')
@@ -166,7 +174,7 @@ class Main:
 			if self.plugin_category == __language__(30001):
 				if thumbnail_url == '':
 					if (self.DEBUG) == 'true':
-						xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url aflevering in pc category because it doesn't have a thumbnail", str(video_page_url) ), xbmc.LOGNOTICE )
+						xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url aflevering in pc category because it doesn't have a thumbnail", str(video_page_and_title_url) ), xbmc.LOGNOTICE )
 					continue
 
 			# Add to list
