@@ -22,6 +22,6 @@
     <forum>http://forum.xbmc.org/showthread.php?tid=161375</forum>
     <website>http://www.gamekings.tv</website>
     <email></email>
-    <source></source>
+    <source>git://github.com/skipmodea1/plugin.video.gamekings.git</source>
   </extension>
 </addon>
