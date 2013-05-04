@@ -2,8 +2,8 @@
 # Imports
 #
 from BeautifulSoup import BeautifulSoup
-from gamekings_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
-from gamekings_utils import HTTPCommunicator
+from teamhww_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
+from teamhww_utils import HTTPCommunicator
 import os
 import re
 import sys
@@ -38,7 +38,6 @@ class Main:
 		
 		if self.next_page_possible == 'True':
 		# Determine current item number, next item number, next_url
-		#f.e. http://www.gamekings.tv/category/videos/page/001/
 			pos_of_page		 			 	 = self.video_list_page_url.rfind('/page/')
 			if pos_of_page >= 0:
 				page_number_str			     = str(self.video_list_page_url[pos_of_page + len('/page/'):pos_of_page + len('/page/') + len('000')])
@@ -77,25 +76,33 @@ class Main:
 		# Parse response
 		soup = BeautifulSoup( html_source )
 		
-		# Get the thumbnail urls
-		#<img src="http://www.gamekings.tv/wp-content/uploads/20130307_gowascensionreviewsplash1-75x75.jpg" alt="God of War: Ascension Review">
-		#for http://www.gamekings.tv/pcgamersunite/ the thumbnail links sometimes contain '//': f.e. http://www.gamekings.tv//wp-content/uploads/20110706_hww_alienwarelaptop_slider-75x75.jpg
-		#thumbnail_urls = soup.findAll('img', attrs={'src': re.compile("^http://www.gamekings.tv/wp-content/uploads/")})
-		thumbnail_urls = soup.findAll('img', attrs={'src': re.compile("^http://www.gamekings.tv/")})
+		# Get the articles
+		#<article>
+		# 				<a href='http://www.teamhww.nl/2013/05/wat-weten-we-over-de-hardware-van-de-volgende-xbox/'>
+		# 					<h1>Wat weten we over de hardware van de volgende Xbox</h1></a>
+		# 				
+		# 				<hr class='primaryColor'>
+		# 				<small class='tertiaryColor'>01/05/2013 | 1 dag, 23 uur geleden | door Marvin Witlox | <a href='http://www.teamhww.nl/2013/05/wat-weten-we-over-de-hardware-van-de-volgende-xbox/#disqus_thread'></a></small>
+		# 				<div class='col'>
+		# 					<img src='http://www.teamhww.nl/wp-content/uploads/2013/05/20130501_XboxSplash-145x100.jpg' alt="Wat weten we over de hardware van de volgende Xbox Thumbnail">
+		# 					<span class='pImg primaryColor tip'>
+		# 						
+		# 						<img src='/wp-content/themes/teamHWW/images/tip_small_hww.png' class='tip' alt='Style Tip' />
+		# 					</span>
+		# 					<span class='tags'>Tags:<br/><a href="/tag/hardware">hardware</a>, <a href="/tag/microsoft">microsoft</a>, <a href="/tag/xbox">xbox</a>, <a href="/tag/xbox-720">xbox 720</a></span>
+		# 				</div>
+		# 				<a href='http://www.teamhww.nl/2013/05/wat-weten-we-over-de-hardware-van-de-volgende-xbox/'><span class='excerpt'>
+		# Het kan je niet ontgaan zijn dat de console oorlog weer op het punt staat los te barsten. Na de persconferentie van Sony waarin ze de PlayStation 4 hebben aangekondigd gaat nu ook Microsoft hun nieuwe Xbox bekend maken. Allemaal leuk en aardig natuurlijk, maar hoe zit het met de kracht van deze consoles? Dat [...]
+		# 				</span></a>
+		#</article>
+		
+		articles = soup.findAll('article')
 		
 		if (self.DEBUG) == 'true':
-			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(thumbnail_urls)", str(len(thumbnail_urls)) ), xbmc.LOGNOTICE )
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(articles)", str(len(articles)) ), xbmc.LOGNOTICE )
 		
-		# Get the titles and video page urls
-		#<a href="http://www.gamekings.tv/videos/lars-gustavsson-over-battlefield-4/" title="Lars Gustavsson over Battlefield 4">
-		#skip this: <a href='http://www.gamekings.tv/videos/lars-gustavsson-over-battlefield-4/#disqus_thread'>
-		video_page_urls_and_titles = soup.findAll('a', attrs={'href': re.compile("^http://www.gamekings.tv/videos/")})
-		
-		if (self.DEBUG) == 'true':
-			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(video_page_urls_and_titles)", str(len(video_page_urls_and_titles)) ), xbmc.LOGNOTICE )
-			
-		for video_page_url_and_title in video_page_urls_and_titles :
-			video_page_url = video_page_url_and_title['href']
+		for article in articles :
+			video_page_url = str(article.a['href'])
 			#if link ends with a '/': process the link, if not: skip the link
 			if video_page_url.endswith('/'):
 				pass
@@ -104,26 +111,12 @@ class Main:
 					xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url not ending on '/'", str(video_page_url) ), xbmc.LOGNOTICE )
 				continue
 
-			#don't skip aflevering if catagory is 'afleveringen'			
-			if self.plugin_category == __language__(30001):
-				pass
-			#if 'aflevering' found in video page url, skip the video page url
-			elif video_page_url.find('aflevering') >= 0:
-				if (self.DEBUG) == 'true':
-					xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url aflevering in non-afleveringen category", str(video_page_url) ), xbmc.LOGNOTICE )
-				continue
-			
 			# Make title
 			#for category is 'afleveringen' use the video_page_url to make the title	
-			if self.plugin_category == __language__(30001):
-				title = str(video_page_url)
-				title = title[31:]
-				title = title.capitalize()
-			#for other category use the title attribute	
-			else:
-				title = video_page_url_and_title['title']
-				#convert from unicode to encoded text (don't use str() to do this)
-				title = title.encode('utf-8')
+			title = str(article.img['alt'])
+			title = title.replace('Thumbnail','')
+			#convert from unicode to encoded text (don't use str() to do this)
+			title = title.encode('utf-8')
 			
 			title = title.replace('-',' ')
 			title = title.replace('/',' ')
@@ -161,27 +154,16 @@ class Main:
 			if (self.DEBUG) == 'true':
 				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "title", str(title) ), xbmc.LOGNOTICE )
 
-			if thumbnail_urls_index >= len(thumbnail_urls):
-				thumbnail_url = ''
-			else:
-				thumbnail_url = thumbnail_urls[thumbnail_urls_index]['src']
+			thumbnail_url = str(article.img['src'])
 
 			if (self.DEBUG) == 'true':
 				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "thumbnail_url", str(thumbnail_url) ), xbmc.LOGNOTICE )
-
-			#in afleveringen category, skip link if there's no thumbnail. i do this because those links repeat on every page and are redundant imho.
-			#it's bit of a hack but it'll do for now			
-			if self.plugin_category == __language__(30001):
-				if thumbnail_url == '':
-					if (self.DEBUG) == 'true':
-						xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url aflevering in pc category because it doesn't have a thumbnail", str(video_page_url_and_title) ), xbmc.LOGNOTICE )
-					continue
 
 			# Add to list
 			parameters = {"action" : "play", "video_page_url" : video_page_url}
 			url = sys.argv[0] + '?' + urllib.urlencode(parameters)
 			listitem = xbmcgui.ListItem( title, iconImage="DefaultVideo.png", thumbnailImage=thumbnail_url )
-			listitem.setInfo( "video", { "Title" : title, "Studio" : "Gamekings" } )
+			listitem.setInfo( "video", { "Title" : title, "Studio" : "TeamHww" } )
 			folder = False
 			xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ] ), url = url, listitem=listitem, isFolder=folder)
 
