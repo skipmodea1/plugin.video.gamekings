@@ -2,8 +2,8 @@
 # Imports
 #
 from BeautifulSoup import BeautifulSoup
-from teamhww_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
-from teamhww_utils import HTTPCommunicator
+from gamekings_const import __addon__, __settings__, __language__, __images_path__, __date__, __version__
+from gamekings_utils import HTTPCommunicator
 import os
 import re
 import sys
@@ -82,22 +82,18 @@ class Main:
 		soup = BeautifulSoup(html_data)
 		
 		# Get the video url
-		
-		#<script type='text/javascript'>
-		# showVideo('20130502_NieuwsDonderdag2.mp4','MjAxMzA1MDJfTmlldXdzRG9uZGVyZGFnMi5tcDQsaHR0cDovL3d3dy50ZWFtaHd3Lm5sL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDEzLzA1LzIwMTMwNTAyX1RCV1NwbGFzaC02MDB4MzQwLmpwZyxUZWFtIEJpam5hIEJpam5hIFdlZWtlbmQgb3ZlciBkZSBuaWV1d2UgTWFydmVsIGZpbG1zIGVuIEJsYWNrQmVycnk=','1');
-		#</script>	
-		pos_of_showVideo = html_data.find('showVideo')
-		pos_of_mp4 = html_data.find('mp4')
-		video_file_name = str(html_data[pos_of_showVideo + len("showVideo('"):pos_of_mp4 + len('mp4')])
-		
-		video_url = "http://stream.hardwarewoensdag.tv/" + video_file_name
+		#<meta property="og:video" content="http://stream.gamekings.tv/20130306_SpecialForces.mp4"/>
+		video_urls = soup.findAll('meta', attrs={'content': re.compile("^http://stream.gamekings.tv/")}, limit=1)
 		
 		if (self.DEBUG) == 'true':
-			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "video_url", str(video_url) ), xbmc.LOGNOTICE )
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(video_urls)", str(len(video_urls)) ), xbmc.LOGNOTICE )
 		
-		if len(video_file_name) == 0:
+		if len(video_urls) == 0:
 			no_url_found = True
 		else:
+			video_url = video_urls[0]['content']
+			if (self.DEBUG) == 'true':
+				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "video_url", str(video_url) ), xbmc.LOGNOTICE )
 			if httpCommunicator.exists( video_url ):
 				have_valid_url = True
 			else:

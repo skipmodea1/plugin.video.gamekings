@@ -4,9 +4,9 @@ import xbmcaddon
 #
 # Constants
 # 
-__addon__       = "plugin.video.teamhww"
+__addon__       = "plugin.video.gamekings"
 __settings__    = xbmcaddon.Addon(id=__addon__ )
 __language__    = __settings__.getLocalizedString
 __images_path__ = os.path.join( xbmcaddon.Addon(id=__addon__ ).getAddonInfo('path'), 'resources', 'images' )
-__date__        = "05 may 2013"
-__version__     = "1.0.0"
+__date__        = "10 april 2013"
+__version__     = "1.0.1"
