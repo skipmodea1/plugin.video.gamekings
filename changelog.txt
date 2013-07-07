@@ -16,3 +16,4 @@ v1.0.2 (Wednesday, 29 may 2013) :
  
 v1.0.3 (Saturday, 7 July 2013) :
 - added beautiful soup as dependency
+- added dutch strings
