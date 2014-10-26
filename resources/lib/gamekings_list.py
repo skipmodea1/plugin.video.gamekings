@@ -111,6 +111,8 @@ class Main:
 			elif video_page_url.find('aflevering') >= 0:
 				if (self.DEBUG) == 'true':
 					xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "skipped video_page_url aflevering in non-afleveringen category", str(video_page_url) ), xbmc.LOGNOTICE )
+			#skip the thumbnail too			
+				thumbnail_urls_index = thumbnail_urls_index + 1
 				continue
 			
 			# Make title
