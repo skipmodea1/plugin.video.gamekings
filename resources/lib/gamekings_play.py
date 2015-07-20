@@ -83,6 +83,10 @@ class Main:
 			
 		soup = BeautifulSoup(html_data)
 		
+		stream_gamekings_tv = False
+		gogo_video = False
+		youtube_video = False
+
 		# Get the video url
 
 		#this is f.e. for Videos	
@@ -91,9 +95,7 @@ class Main:
 		#May 2014: videos are vimeo files now:
 		#<meta property="og:video" content="http://stream.gamekings.tv/http://player.vimeo.com/external/111637217.hd.mp4?s=10e5d0efd4d10756b535b115140ebe13"/>
 		video_urls = soup.findAll('meta', attrs={'content': re.compile("^http://stream.gamekings.tv/")}, limit=1)
-		print "stream" + str(len(video_urls))
 		if len(video_urls) == 0:
-			stream_gamekings_tv = False
 			#let's search for something else 
 
 			#This is f.e. for Gamekings Extra
@@ -104,19 +106,34 @@ class Main:
 			#20141113_Extra.mp4,http://www.gamekings.tv/wp-content/uploads/20141114_Extra_splash-1024x576.jpg,Gamekings Extra: Welke games spelen wij dit najaar?
 			video_urls = re.findall(r'"(.*?)"', str(soup.findAll('script', text=re.compile("gogoVideo"), limit=1)))
 			if str(video_urls[0]) == "":
-				gogo_video = False
+				#let's search for something else 
+				
+				#<iframe src="https://www.youtube.com/embed/8wTWeRg8RGQ" height="315" width="560" allowfullscreen="" frameborder="0"></iframe>
+				video_urls = soup.findAll('iframe', attrs={'src': re.compile("^https://www.youtube.com/embed/")}, limit=1)
+				if len(video_urls) == 0:
+					pass
+				else:
+					youtube_video = True
 			else:
 				gogo_video = True
 		else:
 			stream_gamekings_tv = True
 		
-		if stream_gamekings_tv or gogo_video:
+		if (self.DEBUG) == 'true':
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "stream_gamekings_tv", str(stream_gamekings_tv) ), xbmc.LOGNOTICE )
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "gogo_video", str(gogo_video) ), xbmc.LOGNOTICE )
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "youtube_video", str(youtube_video) ), xbmc.LOGNOTICE )
+			xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "len(video_urls)", str(len(video_urls)) ), xbmc.LOGNOTICE )
+		
+		if stream_gamekings_tv or gogo_video or youtube_video:
 			if stream_gamekings_tv:
 				video_url = str(video_urls[0]['content'])
 			elif gogo_video:
 				video_urls_dec = str(base64.b64decode(video_urls[0]))
 				video_urls_dict = video_urls_dec.split(',')
 				video_url = str(video_urls_dict[0])
+			elif youtube_video:
+				video_url = str(video_urls[0]['src'])			
 				
 			if (self.DEBUG) == 'true':
 				xbmc.log( "[ADDON] %s v%s (%s) debug mode, %s = %s" % ( __addon__, __version__, __date__, "video_url", str(video_url) ), xbmc.LOGNOTICE )
@@ -129,15 +146,20 @@ class Main:
 				video_url = video_url.replace("http://stream.gamekings.tv/", "")
 				have_valid_url = True
 			else:
-				video_url = "http://stream.gamekings.tv/large/" + video_url
-				if httpCommunicator.exists( video_url ):
+				if youtube_video:
+					youtubeID = video_url.replace("https://www.youtube.com/embed/", "")
+					video_url = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % youtubeID
 					have_valid_url = True
 				else:
-					video_url = video_url.replace("http://stream.gamekings.tv/large", "http://stream.gamekings.tv/")
+					video_url = "http://stream.gamekings.tv/large/" + video_url
 					if httpCommunicator.exists( video_url ):
 						have_valid_url = True
 					else:
-						unplayable_media_file = True
+						video_url = video_url.replace("http://stream.gamekings.tv/large", "http://stream.gamekings.tv/")
+						if httpCommunicator.exists( video_url ):
+							have_valid_url = True
+						else:
+							unplayable_media_file = True
 		else:
 			no_url_found = True
 		
