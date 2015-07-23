@@ -1,5 +1,6 @@
 v1.1.5 (Monday, 20 July 2015) :
-- support youtube files
+- added support for youtube files
+- added support for gogoVideo youtube files (odd but true)
 
 v1.1.4 (Thursday, 25 June 2015) :
 - minor fixes in category "More E3 2015"
