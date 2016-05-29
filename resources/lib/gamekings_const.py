@@ -11,5 +11,5 @@ ADDON = "plugin.video.gamekings"
 SETTINGS = xbmcaddon.Addon(id=ADDON)
 LANGUAGE = SETTINGS.getLocalizedString
 IMAGES_PATH = os.path.join(xbmcaddon.Addon(id=ADDON).getAddonInfo('path'), 'resources', 'images')
-DATE = "2016-05-20"
-VERSION = "1.2.0"
+DATE = "2016-05-29"
+VERSION = "1.2.1"
