@@ -122,10 +122,8 @@ class Main:
                 if start_pos_video_url == -1:
                     start_pos_video_url = html_data_str.find("https://www.youtube.com/")
                     if start_pos_video_url == -1:
-                        start_pos_video_url = html_data_str.find("https://www.youtube.com/")
-                        if start_pos_video_url == -1:
-                            no_url_found = True
-                            have_valid_url = False
+                        no_url_found = True
+                        have_valid_url = False
 
         # Make video url
         if have_valid_url:

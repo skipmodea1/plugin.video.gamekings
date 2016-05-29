@@ -213,6 +213,7 @@ class Main:
                 title = title[1:]
 
             title = str(title).replace("aflevering", "Aflevering")
+            title = str(title).replace("Aflevering", str(LANGUAGE(30204)))
             title = str(title).replace("Gamekings Extra: ", "")
             title = str(title).replace("Gamekings Extra over ", "")
             title = title.capitalize()

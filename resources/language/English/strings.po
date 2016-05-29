@@ -75,6 +75,10 @@ msgctxt "#30203"
 msgid "MPlayer"
 msgstr ""
 
+msgctxt "#30204"
+msgid "Episode"
+msgstr ""
+
 msgctxt "#30300"
 msgid "Video quality"
 msgstr ""
