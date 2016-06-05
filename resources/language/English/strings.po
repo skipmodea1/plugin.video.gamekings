@@ -80,7 +80,7 @@ msgid "Episode"
 msgstr ""
 
 msgctxt "#30300"
-msgid "Video quality"
+msgid "Maximum Video quality"
 msgstr ""
 
 msgctxt "#30301"
@@ -88,7 +88,7 @@ msgid "Standard"
 msgstr ""
 
 msgctxt "#30302"
-msgid "High Definition (if available)"
+msgid "High"
 msgstr ""
 
 msgctxt "#30400"

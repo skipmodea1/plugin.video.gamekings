@@ -80,16 +80,16 @@ msgid "Episode"
 msgstr "Aflevering"
 
 msgctxt "#30300"
-msgid "Video quality"
-msgstr "Video kwaliteit"
+msgid "Maximum Video quality"
+msgstr "Mamimum Video kwaliteit"
 
 msgctxt "#30301"
 msgid "Standard"
 msgstr "Standaard"
 
 msgctxt "#30302"
-msgid "High Definition (if available)"
-msgstr "High Definition (indien beschikbaar)"
+msgid "High"
+msgstr "Hoog"
 
 msgctxt "#30400"
 msgid "Debug"

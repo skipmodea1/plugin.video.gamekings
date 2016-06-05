@@ -32,22 +32,17 @@ class Main:
         # Get the plugin handle as an integer number
         self.plugin_handle = int(sys.argv[1])
 
-        # Get plugin settings
-        self.DEBUG = SETTINGS.getSetting('debug')
-
-        if self.DEBUG == 'true':
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % (
-                ADDON, VERSION, DATE, "ARGV", repr(sys.argv), "File", str(__file__)), xbmc.LOGNOTICE)
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % (
+                ADDON, VERSION, DATE, "ARGV", repr(sys.argv), "File", str(__file__)), xbmc.LOGDEBUG)
 
         # Parse parameters
         self.plugin_category = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['plugin_category'][0]
         self.video_list_page_url = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['url'][0]
         self.next_page_possible = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['next_page_possible'][0]
 
-        if self.DEBUG == 'true':
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                 ADDON, VERSION, DATE, "self.video_list_page_url", str(self.video_list_page_url)),
-                     xbmc.LOGNOTICE)
+                     xbmc.LOGDEBUG)
 
         self.plugin_category = LANGUAGE(30004)
         self.next_page_possible = "False"
@@ -58,9 +53,8 @@ class Main:
             self.search_string = keyboard.getText()
             self.video_list_page_url = self.video_list_page_url % (self.search_string)
 
-        if self.DEBUG == 'true':
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
-                ADDON, VERSION, DATE, "self.video_list_page_url", str(self.video_list_page_url)), xbmc.LOGNOTICE)
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                ADDON, VERSION, DATE, "self.video_list_page_url", str(self.video_list_page_url)), xbmc.LOGDEBUG)
 
         if self.next_page_possible == 'True':
             # Determine current item number, next item number, next_url
@@ -79,19 +73,15 @@ class Main:
                     page_number_next_str = '00' + str(page_number_next)
                 self.next_url = str(self.video_list_page_url).replace(page_number_str, page_number_next_str)
 
-                if self.DEBUG == 'true':
-                    xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                         ADDON, VERSION, DATE, "self.next_url", str(urllib.unquote_plus(self.next_url))),
-                             xbmc.LOGNOTICE)
+                             xbmc.LOGDEBUG)
 
         #
         # Get the videos
         #
         self.getVideos()
 
-        #
-        # Get videos
-        #
 
     def getVideos(self):
         #
@@ -112,11 +102,10 @@ class Main:
         # </a>
         items = soup.findAll('a', attrs={'href': re.compile("^http://www.gamekings.nl/")})
 
-        if self.DEBUG == 'true':
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                 ADDON, VERSION, DATE, "len(items)",
                 str(len(items))),
-                     xbmc.LOGNOTICE)
+                     xbmc.LOGDEBUG)
 
         # Create a list for our items.
         listing = []
@@ -127,11 +116,10 @@ class Main:
             if video_page_url.endswith('/'):
                 pass
             else:
-                if self.DEBUG == 'true':
-                    xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                         ADDON, VERSION, DATE, "skipped video_page_url not ending on '/'",
                         str(video_page_url)),
-                             xbmc.LOGNOTICE)
+                             xbmc.LOGDEBUG)
                 continue
 
             # this is category Videos or Afleveringen
@@ -142,10 +130,9 @@ class Main:
                     pass
                 else:
                     # skip the url if it is not a video
-                    if self.DEBUG == 'true':
-                        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                    xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                             ADDON, VERSION, DATE, "skipped video_page_url",
-                            str(video_page_url)), xbmc.LOGNOTICE)
+                            str(video_page_url)), xbmc.LOGDEBUG)
                     continue
 
             # Make title
@@ -169,10 +156,9 @@ class Main:
                     pass
                 else:
                     # skip the url
-                    if self.DEBUG == 'true':
-                        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                    xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                             ADDON, VERSION, DATE, "skipped non-gamekings-extra title in gamekings extra category",
-                            str(video_page_url)), xbmc.LOGNOTICE)
+                            str(video_page_url)), xbmc.LOGDEBUG)
                     continue
 
             title = title.replace('-', ' ')
@@ -218,25 +204,22 @@ class Main:
             title = str(title).replace("Gamekings Extra over ", "")
             title = title.capitalize()
 
-            if self.DEBUG == 'true':
-                xbmc.log(
+            xbmc.log(
                     "[ADDON] %s v%s (%s) debug mode, %s = %s" % (ADDON, VERSION, DATE, "title", str(title)),
-                    xbmc.LOGNOTICE)
+                    xbmc.LOGDEBUG)
 
             # Make thumbnail
             try:
                 thumbnail_url = item.img['data-original']
             except:
                 # skip the item if it has no thumbnail
-                if self.DEBUG == 'true':
-                    xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                         ADDON, VERSION, DATE, "skipping item with no thumbnail",
-                        str(item)), xbmc.LOGNOTICE)
+                        str(item)), xbmc.LOGDEBUG)
                 continue
 
-            if self.DEBUG == 'true':
-                xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
-                    ADDON, VERSION, DATE, "thumbnail_url", str(thumbnail_url)), xbmc.LOGNOTICE)
+            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                    ADDON, VERSION, DATE, "thumbnail_url", str(thumbnail_url)), xbmc.LOGDEBUG)
 
             list_item = xbmcgui.ListItem(label=title, thumbnailImage=thumbnail_url)
             list_item.setInfo("video", {"title": title, "studio": ADDON})

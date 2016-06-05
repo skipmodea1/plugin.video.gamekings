@@ -32,12 +32,8 @@ class Main:
         # Get the plugin handle as an integer number
         self.plugin_handle = int(sys.argv[1])
 
-        # Get plugin settings
-        self.DEBUG = SETTINGS.getSetting('debug')
-
-        if self.DEBUG == 'true':
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % (
-                ADDON, VERSION, DATE, "ARGV", repr(sys.argv), "File", str(__file__)), xbmc.LOGNOTICE)
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % (
+                ADDON, VERSION, DATE, "ARGV", repr(sys.argv), "File", str(__file__)), xbmc.LOGDEBUG)
 
         # Parse parameters
         self.plugin_category = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['plugin_category'][0]
@@ -46,9 +42,8 @@ class Main:
         self.title = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['title'][0]
         self.title = str(self.title)
 
-        if self.DEBUG == 'true':
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
-                ADDON, VERSION, DATE, "self.video_page_url", str(self.video_page_url)), xbmc.LOGNOTICE)
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                ADDON, VERSION, DATE, "self.video_page_url", str(self.video_page_url)), xbmc.LOGDEBUG)
 
         #
         # Play video
@@ -88,9 +83,8 @@ class Main:
             html_data = http_communicator.get(self.video_page_url)
             html_data_str = str(html_data)
         except urllib2.HTTPError, error:
-            if self.DEBUG == 'true':
-                xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
-                    ADDON, VERSION, DATE, "HTTPError", str(error)), xbmc.LOGNOTICE)
+            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                    ADDON, VERSION, DATE, "HTTPError", str(error)), xbmc.LOGDEBUG)
             dialog_wait.close()
             del dialog_wait
             xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30507) % (str(error)))
@@ -137,10 +131,9 @@ class Main:
                     no_url_found = True
                     have_valid_url = False
 
-            if self.DEBUG == 'true':
-                xbmc.log(
+            xbmc.log(
                     "[ADDON] %s v%s (%s) debug mode, %s = %s" % (ADDON, VERSION, DATE, "video_url", str(video_url)),
-                    xbmc.LOGNOTICE)
+                    xbmc.LOGDEBUG)
 
         # Play video
         if have_valid_url:
