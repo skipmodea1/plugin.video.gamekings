@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-
-</settings> 
+  <category label="General">
+    <setting id="base-url" type="text" label="30103" default="http://www.gamekings.tv/"/>
+  </category>
+</settings>

@@ -59,6 +59,10 @@ msgctxt "#30102"
 msgid "Website"
 msgstr ""
 
+msgctxt "#30103"
+msgid "Base Url"
+msgstr ""
+
 msgctxt "#30200"
 msgid "Video player"
 msgstr ""

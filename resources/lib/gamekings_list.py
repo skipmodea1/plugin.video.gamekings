@@ -14,9 +14,8 @@ import xbmcgui
 import xbmcplugin
 from BeautifulSoup import BeautifulSoup
 
-from gamekings_const import ADDON, SETTINGS, LANGUAGE, IMAGES_PATH, DATE, VERSION
+from gamekings_const import ADDON, SETTINGS, LANGUAGE, IMAGES_PATH, DATE, VERSION, BASE_URL_GAMEKINGS_TV
 from gamekings_utils import HTTPCommunicator
-
 
 #
 # Main class
@@ -32,8 +31,22 @@ class Main:
         # Get the plugin handle as an integer number
         self.plugin_handle = int(sys.argv[1])
 
+        # Get plugin settings
+        self.BASE_URL = SETTINGS.getSetting('base-url')
+        if self.BASE_URL == '':
+            self.BASE_URL = BASE_URL_GAMEKINGS_TV
+        else:
+            if self.BASE_URL.endswith("/"):
+                pass
+            else:
+                # Add a slash at the end
+                self.BASE_URL = self.BASE_URL + "/"
+
         xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s, %s = %s" % (
                 ADDON, VERSION, DATE, "ARGV", repr(sys.argv), "File", str(__file__)), xbmc.LOGDEBUG)
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+            ADDON, VERSION, DATE, "self.BASE_URL", str(self.BASE_URL)),
+                 xbmc.LOGDEBUG)
 
         # Parse parameters
         self.plugin_category = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['plugin_category'][0]
@@ -46,7 +59,7 @@ class Main:
 
         if self.next_page_possible == 'True':
             # Determine current item number, next item number, next_url
-            # f.e. http://www.gamekings.nl/category/videos/page/001/
+            # f.e. http://www.gamekings.tv/category/videos/page/001/
             pos_of_page = self.video_list_page_url.rfind('/page/')
             if pos_of_page >= 0:
                 page_number_str = str(
@@ -87,10 +100,22 @@ class Main:
         soup = BeautifulSoup(html_source)
 
         # Get the items. Each item contains a title, a video page url and a thumbnail url
-        # <a href="http://www.gamekings.nl/videos/evdwv-over-assassins-creed-en-pokemon-sun-moon/" title="EvdWV over Assassin&#8217;s Creed en Pokèmon Sun &amp; Moon" class="post__thumb">
-        #     <img width="270" height="170" data-original="http://www.gamekings.nl/wp-content/uploads/20160513_evdwv_splash.jpg" alt="EvdWV over Assassin&#8217;s Creed en Pokèmon Sun &amp; Moon" class="post__image  lazy">
-        # </a>
-        items = soup.findAll('a', attrs={'href': re.compile("^http://www.gamekings.nl/")})
+        # <div class="post post--horizontal">
+        #   <a href="http://www.gamekings.tv/videos/e3-2016-vooruitblik-met-shelly/" title="E3 2016 Vooruitblik met Shelly" class="post__thumb">
+        #     <img width="270" height="170" data-original="http://www.gamekings.tv/wp-content/uploads/20160527_E3vooruitblikShelly-270x170.jpg"
+        #        alt="E3 2016 Vooruitblik met Shelly" class="post__image  lazy">
+        #   </a>
+        #   <h3 class="post__title">
+        #     <a href="http://www.gamekings.tv/videos/e3-2016-vooruitblik-met-shelly/" class="post__titlelink">E3 2016 Vooruitblik met Shelly                </a>
+        #   </h3>
+        #   <p class="post__summary">De regeltante aan het woord in deze vooruitblik!            </p>
+        #     <div class="meta">
+        #       <a href="http://www.gamekings.tv/meer-alles/?kings=8284,12375" class="meta__item">Jan &amp; Shelly</a>
+        #         <span class="meta__item">07/06/2016</span>
+        #       <a href="http://www.gamekings.tv/videos/e3-2016-vooruitblik-met-shelly/#comments" class="meta__item  meta--comments  disqus-comment-count" data-disqus-url="http://www.gamekings.tv/videos/e3-2016-vooruitblik-met-shelly/">0</a>
+        #     </div>
+
+        items = soup.findAll('a', attrs={'href': re.compile("^" + self.BASE_URL)})
 
         xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                 ADDON, VERSION, DATE, "len(items)",

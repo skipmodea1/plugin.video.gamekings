@@ -97,7 +97,7 @@ class Main:
         #             <script type="text/javascript">
         #                 jwplayer('videoplayer').setup({
         #                     file: 'https://player.vimeo.com/external/166503498.hd.mp4?s=c44264eced6082c0789371cb5209af96bc44035b',
-        #                     image: 'http://www.gamekings.nl/wp-content/uploads/20160513_gk1702_splash.jpg',
+        #                     image: 'http://www.gamekings.tv/wp-content/uploads/20160513_gk1702_splash.jpg',
         #                     title: 'Gamekings S17E02: De Synergie Aflevering',
         #                     width: '100%',
         #                     aspectratio: '16:9',
