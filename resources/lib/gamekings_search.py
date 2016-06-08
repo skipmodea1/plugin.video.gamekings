@@ -4,6 +4,7 @@
 #
 # Imports
 #
+import requests
 import os
 import re
 import sys
@@ -15,7 +16,6 @@ import xbmcplugin
 from BeautifulSoup import BeautifulSoup
 
 from gamekings_const import ADDON, SETTINGS, LANGUAGE, IMAGES_PATH, DATE, VERSION, BASE_URL_GAMEKINGS_TV
-from gamekings_utils import HTTPCommunicator
 
 
 #
@@ -105,7 +105,12 @@ class Main:
         #
         # Get HTML page
         #
-        html_source = HTTPCommunicator().get(self.video_list_page_url)
+        #
+        # Get HTML page
+        #
+        response = requests.get(self.video_list_page_url)
+        html_source = response.text
+        html_source = html_source.encode('utf-8', 'ignore')
 
         # Parse response
         soup = BeautifulSoup(html_source)
@@ -126,6 +131,10 @@ class Main:
 
         for item in items:
             video_page_url = item['href']
+
+            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                ADDON, VERSION, DATE, "video_page_url", str(video_page_url)), xbmc.LOGDEBUG)
+
             # if link ends with a '/': process the link, if not: skip the link
             if video_page_url.endswith('/'):
                 pass
@@ -142,12 +151,19 @@ class Main:
                     pass
                 elif str(video_page_url).lower().find('uncategorized') >= 0:
                     pass
+                elif str(video_page_url).lower().find('premium') >= 0:
+                    pass
                 else:
                     # skip the url if it is not a video
                     xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                             ADDON, VERSION, DATE, "skipped video_page_url",
                             str(video_page_url)), xbmc.LOGDEBUG)
                     continue
+
+            if str(video_page_url).lower().find('premium') >= 0:
+                premium_video = True
+            else:
+                premium_video = False
 
             # Make title
             try:
@@ -217,6 +233,8 @@ class Main:
             title = str(title).replace("Gamekings Extra: ", "")
             title = str(title).replace("Gamekings Extra over ", "")
             title = title.capitalize()
+            if premium_video:
+                title = title + " (Premium video)"
 
             xbmc.log(
                     "[ADDON] %s v%s (%s) debug mode, %s = %s" % (ADDON, VERSION, DATE, "title", str(title)),
