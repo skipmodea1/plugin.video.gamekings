@@ -122,7 +122,6 @@ class Main:
                         # check that the login was technically ok (status_code 200).
                         # This in itself does NOT mean that the username/password were correct.
                         if reply.status_code == 200:
-                            pass
                             # check that the 'Uitloggen' is in the response. If that's the case, the login was ok
                             # and the username and password in settings are ok.
                             if str(html_source).find('Uitloggen') >= 0:
