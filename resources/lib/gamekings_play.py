@@ -263,6 +263,14 @@ class Main:
                 youtube_id = youtube_id.replace("http://www.youtube.com/", "")
                 youtube_id = youtube_id.replace("https://www.youtube.com/", "")
                 video_url = 'plugin://plugin.video.youtube/play/?video_id=%s' % youtube_id
+            # premium video's on vimeo look like this: http://player.vimeo.com/video/190106340?title=0&autoplay=1&portrait=0&badge=0&color=C7152F
+            elif video_url.find("player.vimeo.com/video/") > 0:
+                vimeo_id = str(video_url)
+                vimeo_id = vimeo_id.replace("http://player.vimeo.com/video/", "")
+                vimeo_id = vimeo_id.replace("https://player.vimeo.com/video/", "")
+                vimeo_id = vimeo_id[0:vimeo_id.find("?")]
+                video_url = 'plugin://plugin.video.vimeo/play/?video_id=%s' % vimeo_id
+
             list_item = xbmcgui.ListItem(path=video_url)
             xbmcplugin.setResolvedUrl(self.plugin_handle, True, list_item)
         #
