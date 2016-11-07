@@ -122,9 +122,18 @@ class Main:
                         # check that the login was technically ok (status_code 200).
                         # This in itself does NOT mean that the username/password were correct.
                         if reply.status_code == 200:
-                            # check that the 'Uitloggen' is in the response. If that's the case, the login was ok
-                            # and the username and password in settings are ok.
-                            if str(html_source).find('Uitloggen') >= 0:
+                            # check that 'login_error' is in the response. If that's the case, the login was not ok
+                            # and the username and password in settings are not ok.
+                            if str(html_source).find('login_error') >= 0:
+                                try:
+                                    dialog_wait.close()
+                                    del dialog_wait
+                                except:
+                                    pass
+                                xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30601), LANGUAGE(30602),
+                                                    LANGUAGE(30603))
+                                sys.exit(1)
+                            else:
                                 dialog_wait.create("Login Success", "Currently looking for videos in '%s'" % self.title)
                                 xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                                     ADDON, VERSION, DATE, "self.video_page_url", str("Login was succesfull!!")), xbmc.LOGDEBUG)
@@ -134,15 +143,6 @@ class Main:
                                 xbmc.log("[ADDON] %s v%s (%s) debug mode, Loaded %s" % (
                                     ADDON, VERSION, DATE, str(self.video_page_url)),
                                          xbmc.LOGDEBUG)
-                            else:
-                                try:
-                                    dialog_wait.close()
-                                    del dialog_wait
-                                except:
-                                    pass
-                                xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30601), LANGUAGE(30602),
-                                                    LANGUAGE(30603))
-                                sys.exit(1)
                         else:
                             # Something went wrong with logging in
                             try:

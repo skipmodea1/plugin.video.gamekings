@@ -1,5 +1,6 @@
 v1.2.4-SNAPSHOT (2016-06-22)
 - don't change title anymore for premium video's
+- small fix for checking if the login was successful
 
 v1.2.3 (2016-06-08)
 - added support for premium content
