@@ -1,3 +1,6 @@
+v1.2.5-SNAPSHOT (2016-12-28)
+- small fix for tv-episodes
+
 v1.2.4 (2016-07-11)
 - fixed premium videos (!!!!) by using the vimeo plugin (big kudo's to bromix for the plugin)
 - don't change titles anymore for premium video's
