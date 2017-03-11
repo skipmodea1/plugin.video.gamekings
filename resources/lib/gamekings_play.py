@@ -208,9 +208,6 @@ class Main:
         html_source = reply.text
         html_source = html_source.encode('utf-8', 'ignore')
 
-        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
-            ADDON, VERSION, DATE, "Exception2:", str(html_source)), xbmc.LOGDEBUG)
-
         # Get the video url
         # <div class="content  content--page  content--bglight  content--blue">
         #             <div class="video">
