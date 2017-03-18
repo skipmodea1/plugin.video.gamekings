@@ -1,4 +1,4 @@
-v1.2.6-SNAPSHOT (2017-03-12)
+v1.2.6 (2017-03-12)
 - added twitch as a dependency
 - fixed url in addon.xml as per request
 
