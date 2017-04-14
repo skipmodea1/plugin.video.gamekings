@@ -8,9 +8,9 @@ import xbmcaddon
 # Constants
 # 
 ADDON = "plugin.video.gamekings"
-SETTINGS = xbmcaddon.Addon(id=ADDON)
+SETTINGS = xbmcaddon.Addon()
 LANGUAGE = SETTINGS.getLocalizedString
-IMAGES_PATH = os.path.join(xbmcaddon.Addon(id=ADDON).getAddonInfo('path'), 'resources', 'images')
+IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'images')
 BASE_URL_GAMEKINGS_TV = "http://www.gamekings.tv/"
-DATE = "2017-04-08"
-VERSION = "1.2.7-SNAPSHOT"
+DATE = "2017-04-14"
+VERSION = "1.2.7"

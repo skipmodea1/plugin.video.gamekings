@@ -1,5 +1,7 @@
-v1.2.7-SNAPSHOT (2017-04-08)
+v1.2.7 (2017-04-14)
 - small fix for twitch stream
+- changed text from xbmc to kodi
+- not using addon-name in xbmcaddon.Addon() anymore (thanks enen92)
 
 v1.2.6 (2017-03-12)
 - added twitch as a dependency
