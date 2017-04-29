@@ -1,3 +1,6 @@
+v1.2.8-SNAPSHOT (2017-04-29)
+- small improvements to scraping of the video-id
+
 v1.2.7 (2017-04-14)
 - small fix for twitch stream
 - changed text from xbmc to kodi
