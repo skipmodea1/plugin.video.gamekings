@@ -244,12 +244,19 @@ class Main:
                                 no_url_found = True
                                 have_valid_url = False
 
+        # xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+        #                     ADDON, VERSION, DATE, "start_pos_video_url", str(start_pos_video_url)), xbmc.LOGDEBUG)
+        # xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+        #                     ADDON, VERSION, DATE, "html_source[start_pos_video_url:]",
+        #                     str(html_source[start_pos_video_url:])), xbmc.LOGDEBUG)
+
         # Try to make a valid video url
         if have_valid_url:
-            end_pos_video_url = html_source.find("'", start_pos_video_url)
-            # if end_pos_video_url == -1:
-            #     end_pos_video_url = html_source.find('"', start_pos_video_url)
-            video_url = html_source[start_pos_video_url:end_pos_video_url]
+            # Let's only use the video_url part
+            html_source_split = str(html_source[start_pos_video_url:]).split()
+            video_url = html_source_split[0]
+            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (ADDON, VERSION, DATE, "video_url after split", str(video_url)),
+                     xbmc.LOGDEBUG)
             if video_url.find("target=") >= 0:
                 no_url_found = True
                 have_valid_url = False
@@ -268,13 +275,7 @@ class Main:
 
         # Play video
         if have_valid_url:
-            # Let's only use the part of the video_url before the first space
-            video_url_split = video_url.split()
-            video_url = video_url_split[0]
-            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (ADDON, VERSION, DATE, "video_url after split", str(video_url)),
-                     xbmc.LOGDEBUG)
-
-            # regular video's on vimeo look like this: https://player.vimeo.com/external/166503498.hd.mp4?s=c44264eced6082c0789371cb5209af96bc44035b
+            # regular gamekings video's on vimeo look like this: https://player.vimeo.com/external/166503498.hd.mp4?s=c44264eced6082c0789371cb5209af96bc44035b
             if video_url.find("player.vimeo.com/external/") > 0:
                 vimeo_id = str(video_url)
                 vimeo_id = vimeo_id.replace("http://player.vimeo.com/external/", "")
