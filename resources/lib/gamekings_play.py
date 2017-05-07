@@ -244,8 +244,8 @@ class Main:
                                 no_url_found = True
                                 have_valid_url = False
 
-        # xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
-        #                     ADDON, VERSION, DATE, "start_pos_video_url", str(start_pos_video_url)), xbmc.LOGDEBUG)
+        xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
+                            ADDON, VERSION, DATE, "start_pos_video_url", str(start_pos_video_url)), xbmc.LOGDEBUG)
         # xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
         #                     ADDON, VERSION, DATE, "html_source[start_pos_video_url:]",
         #                     str(html_source[start_pos_video_url:])), xbmc.LOGDEBUG)
@@ -266,6 +266,10 @@ class Main:
                 have_valid_url = False
                 video_url = ""
             elif video_url.find("player.vimeo.com/api/player.js") >= 0:
+                no_url_found = True
+                have_valid_url = False
+                video_url = ""
+            elif video_url.find("www.youtube.com/user/Gamekingsextra") >= 0:
                 no_url_found = True
                 have_valid_url = False
                 video_url = ""
@@ -315,6 +319,9 @@ class Main:
         #
         elif str(html_source).find("twitch") > 0:
             video_url = TWITCHURL
+
+            xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (ADDON, VERSION, DATE, "trying twitch channel", str(video_url)),
+                     xbmc.LOGDEBUG)
 
             list_item = xbmcgui.ListItem(path=video_url)
             xbmcplugin.setResolvedUrl(self.plugin_handle, True, list_item)

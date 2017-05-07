@@ -1,5 +1,6 @@
-v1.2.8-SNAPSHOT (2017-04-29)
-- small improvements to scraping of the video-id
+v1.2.8 (2017-05-07)
+- small improvements to scraping of the video-id in all categories
+- fix for gamekings extra video's
 
 v1.2.7 (2017-04-14)
 - small fix for twitch stream

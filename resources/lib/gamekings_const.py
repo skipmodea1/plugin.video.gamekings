@@ -12,5 +12,5 @@ SETTINGS = xbmcaddon.Addon()
 LANGUAGE = SETTINGS.getLocalizedString
 IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'images')
 BASE_URL_GAMEKINGS_TV = "http://www.gamekings.tv/"
-DATE = "2017-04-29"
-VERSION = "1.2.8-SNAPSHOT"
+DATE = "2017-05-07"
+VERSION = "1.2.8"
