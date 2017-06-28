@@ -14,5 +14,5 @@ IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 
 BASE_URL_GAMEKINGS_TV = "https://www.gamekings.tv/"
 LOGIN_URL = 'https://www.gamekings.tv/wp-login.php'
 TWITCH_URL =  'plugin://plugin.video.twitch/playLive/gamekings/'
-DATE = "2017-05-17"
-VERSION = "1.2.10"
+DATE = "2017-06-28"
+VERSION = "1.2.11-SNAPSHOT"

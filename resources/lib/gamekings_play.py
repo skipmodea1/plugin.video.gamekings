@@ -57,6 +57,7 @@ class Main:
         # Init
         #
         video_url = ""
+        dialog_wait = xbmcgui.DialogProgress()
 
         #
         # Get current list item details
@@ -66,14 +67,6 @@ class Main:
         # studio = unicode(xbmc.getInfoLabel("list_item.Studio"), "utf-8")
         plot = unicode(xbmc.getInfoLabel("list_item.Plot"), "utf-8")
         genre = unicode(xbmc.getInfoLabel("list_item.Genre"), "utf-8")
-
-        #
-        # Show wait dialog while parsing data
-        #
-        dialog_wait = xbmcgui.DialogProgress()
-        dialog_wait.create(LANGUAGE(30504), self.title)
-        # wait 1 second
-        xbmc.sleep(1000)
 
         reply = ''
         session = ''
@@ -124,11 +117,6 @@ class Main:
                             # check that 'login_error' is in the response. If that's the case, the login was not ok
                             # and the username and password in settings are not ok.
                             if str(html_source).find('login_error') >= 0:
-                                try:
-                                    dialog_wait.close()
-                                    del dialog_wait
-                                except:
-                                    pass
                                 xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30601), LANGUAGE(30602),
                                                     LANGUAGE(30603))
                                 sys.exit(1)
@@ -144,63 +132,33 @@ class Main:
                                          xbmc.LOGDEBUG)
                         else:
                             # Something went wrong with logging in
-                            try:
-                                dialog_wait.close()
-                                del dialog_wait
-                            except:
-                                pass
                             xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30604) % (str(reply.status_code)))
                             sys.exit(1)
 
                     except urllib2.HTTPError, error:
                         xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                             ADDON, VERSION, DATE, "HTTPError", str(error)), xbmc.LOGDEBUG)
-                        try:
-                            dialog_wait.close()
-                            del dialog_wait
-                        except:
-                            pass
                         xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30606) % (str(error)))
                         sys.exit(1)
                     except:
                         exception = sys.exc_info()[0]
                         xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                             ADDON, VERSION, DATE, "Exception1:", str(exception)), xbmc.LOGDEBUG)
-                        try:
-                            dialog_wait.close()
-                            del dialog_wait
-                        except:
-                            pass
                         sys.exit(1)
                 # This is a premium video and the Premium-membership-switch in the settings is off
                 else:
-                    try:
-                        dialog_wait.close()
-                        del dialog_wait
-                    except:
-                        pass
                     xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30605))
                     sys.exit(1)
 
         except urllib2.HTTPError, error:
             xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                 ADDON, VERSION, DATE, "HTTPError", str(error)), xbmc.LOGDEBUG)
-            try:
-                dialog_wait.close()
-                del dialog_wait
-            except:
-                pass
             xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30606) % (str(error)))
             sys.exit(1)
         except:
             exception = sys.exc_info()[0]
             xbmc.log("[ADDON] %s v%s (%s) debug mode, %s = %s" % (
                 ADDON, VERSION, DATE, "Exception2:", str(exception)), xbmc.LOGDEBUG)
-            try:
-                dialog_wait.close()
-                del dialog_wait
-            except:
-                pass
             sys.exit(1)
 
         html_source = reply.text
