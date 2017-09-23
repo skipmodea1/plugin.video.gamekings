@@ -1,6 +1,7 @@
 v1.2.11-SNAPSHOT (2017-06-28)
 - removed looking for video dialogue
 - removed extra section
+- adding a setting to only view Videos category
 
 v1.2.10 (2017-05-17)
 - removed base url setting
