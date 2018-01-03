@@ -4,14 +4,14 @@
 #
 # Imports
 #
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 import os
 import sys
-import urlparse
+import urllib.parse
 import xbmc
 import xbmcaddon
-
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 LIB_DIR = xbmc.translatePath(
     os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'lib'))
@@ -33,7 +33,9 @@ if len(sys.argv[2]) == 0:
     else:
         import gamekings_main as plugin
 else:
-    action = urlparse.parse_qs(urlparse.urlparse(sys.argv[2]).query)['action'][0]
+    xbmc.log("[ADDON] %s v%s (%s) is starting, ARGVz = %s" % (ADDON, VERSION, DATE, repr(sys.argv)),
+                 xbmc.LOGDEBUG)
+    action = urllib.parse.parse_qs(urllib.parse.urlparse(sys.argv[2]).query)['action'][0]
     #
     # List
     #
