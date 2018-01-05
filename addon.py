@@ -17,7 +17,7 @@ LIB_DIR = xbmc.translatePath(
     os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'lib'))
 sys.path.append(LIB_DIR)
 
-from gamekings_const import ADDON, SETTINGS, LANGUAGE, IMAGES_PATH, DATE, VERSION
+from gamekings_const import ADDON, SETTINGS, DATE, VERSION
 
 # Parse parameters
 if len(sys.argv[2]) == 0:
@@ -33,8 +33,6 @@ if len(sys.argv[2]) == 0:
     else:
         import gamekings_main as plugin
 else:
-    xbmc.log("[ADDON] %s v%s (%s) is starting, ARGVz = %s" % (ADDON, VERSION, DATE, repr(sys.argv)),
-                 xbmc.LOGDEBUG)
     action = urllib.parse.parse_qs(urllib.parse.urlparse(sys.argv[2]).query)['action'][0]
     #
     # List
