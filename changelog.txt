@@ -1,8 +1,8 @@
-v1.2.11-SNAPSHOT (2018-01-03)
+v1.2.11-SNAPSHOT (2018-01-20)
 - removed looking for video dialogue
-- adding a setting to only view Videos category
-- addon now works in kode python 2 and also 3 (!!) thanks to the future project
-- addon.xml contains NOT YET SUPPORTED python3 tag
+- addon now works in kode python 2 and should also work in python 3 (!!) once all dependencies work in python 3.
+Kudo's to the python future package for making this possible.
+- changed order of categories
 
 v1.2.10 (2017-05-17)
 - removed base url setting

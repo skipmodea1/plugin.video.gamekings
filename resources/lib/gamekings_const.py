@@ -17,8 +17,8 @@ LANGUAGE = SETTINGS.getLocalizedString
 IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'images')
 BASE_URL_GAMEKINGS_TV = "https://www.gamekings.tv/"
 LOGIN_URL = 'https://www.gamekings.tv/wp-login.php'
-TWITCH_URL =  'plugin://plugin.video.twitch/playLive/gamekings/'
-DATE = "2018-01-03"
+TWITCH_URL = 'plugin://plugin.video.twitch/playLive/gamekings/'
+DATE = "2018-01-20"
 VERSION = "1.2.11-SNAPSHOT"
 
 

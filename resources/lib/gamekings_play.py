@@ -11,7 +11,6 @@ from builtins import object
 import requests
 import sys
 import urllib.request, urllib.error, urllib.parse
-import urllib.parse
 import xbmc
 import xbmcgui
 import xbmcplugin
@@ -286,7 +285,7 @@ class Main(object):
             log("trying twitch channel", video_url)
 
             list_item = xbmcgui.ListItem(path=video_url)
-            xbmcplugin.setResolvedUrl(self.plugin_handle, True, list_item)
+            xbmcplugin.setResolvedUrl(self.plugin_handle, False, list_item)
         #
         # Alert user
         #
