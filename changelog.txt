@@ -1,4 +1,4 @@
-v1.2.11-SNAPSHOT (2018-01-20)
+v1.2.11 (2018-01-20)
 - removed looking for video dialogue
 - addon now works in kode python 2 and should also work in python 3 (!!) once all dependencies work in python 3.
 Kudo's to the python future package for making this possible.
