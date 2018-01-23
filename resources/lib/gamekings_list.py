@@ -16,7 +16,7 @@ import urllib.request, urllib.parse, urllib.error
 import xbmcgui
 import xbmcplugin
 
-from gamekings_const import ADDON, LANGUAGE, IMAGES_PATH, SETTINGS, BASE_URL_GAMEKINGS_TV, convertToUnicodeString, log, getSoup
+from gamekings_const import ADDON, LANGUAGE, IMAGES_PATH, BASE_URL_GAMEKINGS_TV, convertToUnicodeString, log, getSoup
 
 #
 # Main class
