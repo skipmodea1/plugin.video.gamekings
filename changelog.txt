@@ -1,3 +1,7 @@
+v1.2.13-SNAPSHOT (2018-05-02)
+- prefix the titles of premium-only videos with an asterisk
+- using news-tag in addon.xml
+
 v1.2.12 (2018-03-24)
 - fixed video category (website changes)
 
