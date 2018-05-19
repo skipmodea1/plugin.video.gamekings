@@ -162,3 +162,7 @@ msgstr ""
 msgctxt "#30610"
 msgid "Only show Videos category"
 msgstr ""
+
+msgctxt "#30611"
+msgid "Start the kodi twitch video addon and go to the Gamekings channel to see the live stream."
+msgstr ""

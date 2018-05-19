@@ -2,7 +2,7 @@
 <addon 
 	id="plugin.video.gamekings" 
 	name="GameKings" 
-	version="1.2.13-SNAPSHOT"
+	version="1.2.13"
 	provider-name="Skipmode A1">
   <requires>
     <import addon="xbmc.python"                     version="2.14.0"/>
@@ -32,8 +32,9 @@
     <website>https://www.gamekings.nl</website>
     <email></email>
     <source>https://github.com/skipmodea1/plugin.video.gamekings</source>
-    <news>v1.2.13-SNAPSHOT (2018-05-2)
+    <news>v1.2.13 (2018-05-18)
     - prefix the titles of premium-only videos with an asterisk
-    - using news-tag in addon.xml</news>
+    - using news-tag in addon.xml
+    - showing a popup when it's a twitch live stream</news>
   </extension>
 </addon>

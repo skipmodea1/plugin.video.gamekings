@@ -18,9 +18,8 @@ IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 
 BASE_URL_GAMEKINGS_TV = "https://www.gamekings.tv/"
 PREMIUM_ONLY_VIDEO_TITLE_PREFIX = '* '
 LOGIN_URL = 'https://www.gamekings.tv/wp-login.php'
-TWITCH_URL = 'plugin://plugin.video.twitch/playLive/gamekings/'
-DATE = "2018-05-02"
-VERSION = "1.2.13-SNAPSHOT"
+DATE = "2018-05-18"
+VERSION = "1.2.13"
 
 
 if sys.version_info[0] > 2:
