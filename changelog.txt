@@ -1,3 +1,6 @@
+v1.2.14-SNAPSHOT (2018-05-23)
+- improved detecting if the video is a twitch live-stream
+
 v1.2.13 (2018-05-18)
 - prefix the titles of premium-only videos with an asterisk
 - using news-tag in addon.xml
