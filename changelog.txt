@@ -1,4 +1,5 @@
-v1.2.14-SNAPSHOT (2018-05-23)
+v1.2.14 (2019-02-23)
+- since vimeo disabled oauth1, the vimeo addon broke. Therefore not using that addon anymore
 - improved detecting if the video is a twitch live-stream
 
 v1.2.13 (2018-05-18)

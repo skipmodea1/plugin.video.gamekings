@@ -240,24 +240,12 @@ class Main(object):
         if have_valid_url:
             # regular gamekings video's on vimeo look like this: https://player.vimeo.com/external/166503498.hd.mp4?s=c44264eced6082c0789371cb5209af96bc44035b
             if video_url.find("player.vimeo.com/external/") > 0:
-                vimeo_id = str(video_url)
-                vimeo_id = vimeo_id.replace("http://player.vimeo.com/external/", "")
-                vimeo_id = vimeo_id.replace("https://player.vimeo.com/external/", "")
-                vimeo_id = vimeo_id[0:vimeo_id.find(".")]
-
-                log("vimeo_id1", vimeo_id)
-
-                video_url = 'plugin://plugin.video.vimeo/play/?video_id=%s' % vimeo_id
+                # no need to do anything with the vimeo addon, we can use the video_url directly
+                pass
             # premium video's on vimeo look like this: https://player.vimeo.com/video/190106340?title=0&autoplay=1&portrait=0&badge=0&color=C7152F
             if video_url.find("player.vimeo.com/video/") > 0:
-                vimeo_id = str(video_url)
-                vimeo_id = vimeo_id.replace("http://player.vimeo.com/video/", "")
-                vimeo_id = vimeo_id.replace("https://player.vimeo.com/video/", "")
-                vimeo_id = vimeo_id[0:vimeo_id.find("?")]
-
-                log("vimeo_id2", vimeo_id)
-
-                video_url = 'plugin://plugin.video.vimeo/play/?video_id=%s' % vimeo_id
+                # no need to do anything with the vimeo addon, we can use the video_url directly
+                pass
             elif video_url.find("youtube") > 0:
                 youtube_id = str(video_url)
                 youtube_id = youtube_id.replace("http://www.youtube.com/embed/", "")
@@ -274,8 +262,11 @@ class Main(object):
 
                 video_url = 'plugin://plugin.video.youtube/play/?video_id=%s' % youtube_id
 
+            log("final video_url", video_url)
+
             list_item = xbmcgui.ListItem(path=video_url)
             xbmcplugin.setResolvedUrl(self.plugin_handle, True, list_item)
+
         #
         # Check if it's a twitch live stream
         #
