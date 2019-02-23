@@ -14,13 +14,13 @@ from bs4 import BeautifulSoup
 ADDON = "plugin.video.gamekings"
 SETTINGS = xbmcaddon.Addon()
 LANGUAGE = SETTINGS.getLocalizedString
-IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources', 'images')
+IMAGES_PATH = os.path.join(xbmcaddon.Addon().getAddonInfo('path'), 'resources')
 BASE_URL_GAMEKINGS_TV = "https://www.gamekings.tv/"
 TWITCH_URL_GAMEKINGS_TV = "https://player.twitch.tv/?channel=gamekings"
 PREMIUM_ONLY_VIDEO_TITLE_PREFIX = '* '
 LOGIN_URL = 'https://www.gamekings.tv/wp-login.php'
-DATE = "2018-05-23"
-VERSION = "1.2.14-SNAPSHOT"
+DATE = "2019-02-23"
+VERSION = "1.2.14"
 
 
 if sys.version_info[0] > 2:

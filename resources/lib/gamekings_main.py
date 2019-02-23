@@ -40,18 +40,6 @@ class Main(object):
         xbmcplugin.addDirectoryItem(handle=self.plugin_handle, url=url, listitem=list_item, isFolder=is_folder)
 
         #
-        # Gamekings Extra
-        #
-        parameters = {"action": "list", "plugin_category": LANGUAGE(30002),
-                      "url": BASE_URL_GAMEKINGS_TV + "?s=extra", "next_page_possible": "False"}
-        url = self.plugin_url + '?' + urllib.parse.urlencode(parameters)
-        list_item = xbmcgui.ListItem(LANGUAGE(30002), iconImage="DefaultFolder.png")
-        is_folder = True
-        list_item.setArt({'fanart': os.path.join(IMAGES_PATH, 'fanart-blur.jpg')})
-        list_item.setProperty('IsPlayable', 'false')
-        xbmcplugin.addDirectoryItem(handle=self.plugin_handle, url=url, listitem=list_item, isFolder=is_folder)
-
-        #
         # Trailers
         #
         parameters = {"action": "list", "plugin_category": LANGUAGE(30003),
