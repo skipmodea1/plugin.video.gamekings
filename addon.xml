@@ -2,7 +2,7 @@
 <addon 
     id="plugin.video.gamekings"
     name="GameKings"
-    version="1.2.14"
+    version="1.2.15"
     provider-name="Skipmode A1">
   <requires>
     <import addon="xbmc.python"                     version="2.26.0"/>
@@ -29,7 +29,7 @@
     <website>https://www.gamekings.tv</website>
     <email></email>
     <source>https://github.com/skipmodea1/plugin.video.gamekings</source>
-    <news>v1.2.14 (2019-02-23)
+    <news>v1.2.15 (2019-03-01)
     - vimeo disabled oauth1, causing the vimeo addon to break. Therefore not using that addon anymore
     - improved detecting if the video is a twitch live-stream
     - changed fanart
