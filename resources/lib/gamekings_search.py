@@ -34,8 +34,6 @@ class Main(object):
         # Get the plugin handle as an integer number
         self.plugin_handle = int(sys.argv[1])
 
-        log("ARGV", repr(sys.argv))
-
         # Parse parameters
         self.plugin_category = urllib.parse.parse_qs(urllib.parse.urlparse(sys.argv[2]).query)['plugin_category'][0]
         self.video_list_page_url = urllib.parse.parse_qs(urllib.parse.urlparse(sys.argv[2]).query)['url'][0]
@@ -132,11 +130,11 @@ class Main(object):
 
                 continue
 
-            log("item", item)
+            # log("item", item)
 
             video_page_url = item.a['href']
 
-            log("video_page_url", video_page_url)
+            # log("video_page_url", video_page_url)
 
             # if link ends with a '/': process the link, if not: skip the link
             if video_page_url.endswith('/'):
@@ -217,8 +215,6 @@ class Main(object):
             if str(item).find("title--premium") >= 0:
                 title = PREMIUM_ONLY_VIDEO_TITLE_PREFIX + ' ' + title
 
-            log("title", title)
-
             # Make thumbnail
             try:
                 thumbnail_url = item.a.img['data-original']
@@ -228,8 +224,6 @@ class Main(object):
                 log("skipping item with no thumbnail", item)
 
                 continue
-
-            log("thumbnail_url", thumbnail_url)
 
             list_item = xbmcgui.ListItem(label=title, thumbnailImage=thumbnail_url)
             list_item.setInfo("video", {"title": title, "studio": ADDON})

@@ -28,8 +28,7 @@ if len(sys.argv[2]) == 0:
     xbmc.log("[ADDON] %s v%s (%s) is starting, ARGV = %s" % (ADDON, VERSION, DATE, repr(sys.argv)),
                  xbmc.LOGDEBUG)
 
-
-    if SETTINGS.getSetting('onlyshowvideoscategory') == 'true':
+    if SETTINGS.getSettingBool('onlyshowvideoscategory'):
         import gamekings_list as plugin
     else:
         import gamekings_main as plugin

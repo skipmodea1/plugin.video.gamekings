@@ -32,9 +32,7 @@ class Main(object):
         self.plugin_handle = int(sys.argv[1])
 
         # Get plugin settings
-        self.IS_PREMIUM_MEMBER = SETTINGS.getSetting('is-premium-member')
-
-        log("ARGV", repr(sys.argv))
+        self.IS_PREMIUM_MEMBER = SETTINGS.getSettingBool('is-premium-member')
 
         # Parse parameters
         self.plugin_category = urllib.parse.parse_qs(urllib.parse.urlparse(sys.argv[2]).query)['plugin_category'][0]
@@ -87,7 +85,7 @@ class Main(object):
             # </div>
 
             if str(html_source).find('premiumonly') >= 0:
-                if self.IS_PREMIUM_MEMBER == 'true':
+                if self.IS_PREMIUM_MEMBER:
                     try:
                         # we need a NEW (!!!) session
                         session = requests.Session()
