@@ -47,6 +47,10 @@ msgctxt "#30004"
 msgid "Search in Videos"
 msgstr ""
 
+msgctxt "#30005"
+msgid "Premium Videos"
+msgstr ""
+
 msgctxt "#30100"
 msgid "Version"
 msgstr ""

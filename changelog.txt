@@ -1,3 +1,6 @@
+v1.2.16-SNAPSHOT (2019-05-25)
+- added premium video category
+
 v1.2.15 (2019-03-01)
 - vimeo disabled oauth1, causing the vimeo addon to break. Therefore not using that addon anymore
 - improved detecting if the video is a twitch live-stream

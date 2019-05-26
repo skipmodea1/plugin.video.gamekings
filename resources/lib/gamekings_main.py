@@ -28,6 +28,18 @@ class Main(object):
         self.plugin_handle = int(sys.argv[1])
 
         #
+        # Premium Videos
+        #
+        parameters = {"action": "list", "plugin_category": LANGUAGE(30005),
+                      "url": BASE_URL_GAMEKINGS_TV + "category/premium/page/001/", "next_page_possible": "True"}
+        url = self.plugin_url + '?' + urllib.parse.urlencode(parameters)
+        list_item = xbmcgui.ListItem(LANGUAGE(30005), iconImage="DefaultFolder.png")
+        is_folder = True
+        list_item.setArt({'fanart': os.path.join(IMAGES_PATH, 'fanart-blur.jpg')})
+        list_item.setProperty('IsPlayable', 'false')
+        xbmcplugin.addDirectoryItem(handle=self.plugin_handle, url=url, listitem=list_item, isFolder=is_folder)
+
+        #
         # Videos
         #
         parameters = {"action": "list", "plugin_category": LANGUAGE(30000),
