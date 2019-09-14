@@ -119,6 +119,26 @@ msgctxt "#30501"
 msgid "%s to %s"
 msgstr "%s tot %s"
 
+msgctxt "#30021"
+msgid "4K"
+msgstr "4K"
+
+msgctxt "#30022"
+msgid "1080P"
+msgstr "1080P"
+
+msgctxt "#30023"
+msgid "720P"
+msgstr "720P"
+
+msgctxt "#30024"
+msgid "480P"
+msgstr "480P"
+
+msgctxt "#30025"
+msgid "360P"
+msgstr "360P"
+
 msgctxt "#30502"
 msgid "Page %u"
 msgstr "Pagina %u"
