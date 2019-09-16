@@ -316,20 +316,19 @@ class Main(object):
             #                     ...
             no_url_found = False
             have_valid_url = True
-            start_pos_video_url = html_source.find("http://player.vimeo.com/external")
+            start_pos_video_url = html_source.find("https://player.vimeo.com/external")
             if start_pos_video_url == -1:
-                start_pos_video_url = html_source.find("https://player.vimeo.com/external")
+                start_pos_video_url = html_source.find("https://player.vimeo.com/video")
                 if start_pos_video_url == -1:
-                    start_pos_video_url = html_source.find("http://player.vimeo.com/video")
-                    if start_pos_video_url == -1:
-                        start_pos_video_url = html_source.find("https://player.vimeo.com/video")
-                        if start_pos_video_url == -1:
-                            start_pos_video_url = html_source.find("http://www.youtube.com/")
+                    start_pos_video_url = html_source.find("https://www.youtube.com/")
+                    if start_pos_video_url >= 0:
+                        # Ignore a found "https://www.youtube.com/gamekingsextra"
+                        start_pos_youtube_gamekingsextra = html_source.find("https://www.youtube.com/gamekingsextra")
+                        if start_pos_video_url == start_pos_youtube_gamekingsextra:
+                            start_pos_video_url = html_source.find("https://www.youtube.com/", start_pos_youtube_gamekingsextra + 1)
                             if start_pos_video_url == -1:
-                                start_pos_video_url = html_source.find("https://www.youtube.com/")
-                                if start_pos_video_url == -1:
-                                    no_url_found = True
-                                    have_valid_url = False
+                                no_url_found = True
+                                have_valid_url = False
 
             # Try to make a valid video url
             if have_valid_url:
@@ -377,13 +376,9 @@ class Main(object):
                 pass
             elif video_url.find("youtube") > 0:
                 youtube_id = str(video_url)
-                youtube_id = youtube_id.replace("http://www.youtube.com/embed/", "")
                 youtube_id = youtube_id.replace("https://www.youtube.com/embed/", "")
-                youtube_id = youtube_id.replace("http://www.youtube.com/watch?v=", "")
                 youtube_id = youtube_id.replace("https://www.youtube.com/watch?v=", "")
-                youtube_id = youtube_id.replace("http://www.youtube.com/watch", "")
                 youtube_id = youtube_id.replace("https://www.youtube.com/watch", "")
-                youtube_id = youtube_id.replace("http://www.youtube.com/", "")
                 youtube_id = youtube_id.replace("https://www.youtube.com/", "")
                 youtube_id = youtube_id[0:youtube_id.find("?")]
 

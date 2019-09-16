@@ -33,6 +33,8 @@
     - added premium video category
     - fixes due to website change (september 2019). Let's hope they keep working
     - added maximum video quality setting for the new m3u8 videos
+    - fix for trailers
+    - removed http:// urls
     </news>
     <assets>
       <icon>resources/icon.png</icon>
