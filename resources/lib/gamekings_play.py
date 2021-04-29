@@ -326,6 +326,7 @@ class Main(object):
                 if end_pos_video_url >= 0:
                     youtube_id = html_source[start_pos_video_url:end_pos_video_url]
                     youtube_id = youtube_id.replace("https://youtu.be/","")
+                    youtube_id = youtube_id.strip()
 
                     log("youtube_id", youtube_id)
 
@@ -420,11 +421,13 @@ class Main(object):
                     youtube_id = youtube_id.replace("https://www.youtube.com/watch", "")
                     youtube_id = youtube_id.replace("https://www.youtube.com/", "")
                     youtube_id = youtube_id[0:youtube_id.find("?")]
+                    youtube_id = youtube_id.strip()
 
                     log("youtube_id2", youtube_id)
 
                     video_url = 'plugin://plugin.video.youtube/play/?video_id=%s' % youtube_id
             else:
+                youtube_id = youtube_id.strip()
                 video_url = 'plugin://plugin.video.youtube/play/?video_id=%s' % youtube_id
 
             log("final video_url", video_url)
