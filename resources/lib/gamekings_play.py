@@ -121,17 +121,17 @@ class Main(object):
                             # and the username and password in settings are not ok.
                             if str(html_source).find('login_error') >= 0:
 
-                                log("Login Error!", "login was NOT succesfull!")
+                                log("Login Error!", "login was NOT successful!")
 
                                 xbmcgui.Dialog().ok(LANGUAGE(30000), LANGUAGE(30601), LANGUAGE(30602),
                                                     LANGUAGE(30603))
                                 sys.exit(1)
                             else:
-                                # dialog_wait.create("Login Successfull", "Currently looking for video")
+                                # dialog_wait.create("Login Successful", "Currently looking for video")
 
-                                log("Login", "login was succesfull!!")
+                                log("Login", "login was successful!!")
 
-                                # let's try getting the page after a succesful login, hopefully it contains a link to
+                                # let's try getting the page after a successful login, hopefully it contains a link to
                                 # the video now
                                 self.video_page_url = self.video_page_url + "?login=success"
 
